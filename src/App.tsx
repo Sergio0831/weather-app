@@ -1,7 +1,9 @@
-import "./App.css";
-
-function App() {
-  return <h1>Hello</h1>;
+export default function App() {
+  return (
+    <div className="wrapper">
+      <h1 className="span-full text-preset-2">
+        The quick brown fox jumps over the lazy dog.
+      </h1>
+    </div>
+  );
 }
-
-export default App;

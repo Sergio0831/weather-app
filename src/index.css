@@ -1,1 +1,174 @@
 @import "tailwindcss";
+
+/* DMSans Font (Normal) */
+@font-face {
+  font-family: DMSans;
+  font-style: normal;
+  font-weight: 300 400 500 600 700;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans.woff2") format("woff2");
+}
+
+/* DMSans Font (Italic) */
+@font-face {
+  font-family: DMSans;
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./assets/fonts/DMSans-Italic.woff2") format("woff2");
+}
+
+/* BricolageGrotesque Font */
+@font-face {
+  font-family: BricolageGrotesque;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./assets/fonts/BricolageGrotesque.woff2") format("woff2");
+}
+
+/* Root variables */
+:root {
+  --dm-sans: "DMSans", system-ui;
+  --bricolage-grotesque: "BricolageGrotesque", system-ui;
+}
+
+@theme {
+  /* Fonts */
+  --font-sans: var(--dm-sans);
+  --font-heading: var(--bricolage-grotesque);
+
+  /* Font weights */
+  --font-bold: 700;
+  --font-semibold: 600;
+  --font-medium: 500;
+  --font-regular: 400;
+  --font-light: 300;
+
+  /* Font sizes */
+  --text-4xl: 6rem /* 96px */;
+  --text-3xl: 3.25rem /* 52px */;
+  --text-2xl: 2rem /* 32px */;
+  --text-xl: 1.75rem /* 28px */;
+  --text-lg: 1.25rem /* 20px */;
+  --text-md: 1.125rem /* 18px */;
+  --text-base: 1rem /* 16px */;
+  --text-sm: 0.875rem /* 14px */;
+
+  /* Line height */
+  --leading-1: 100%;
+  --leading-2: 120%;
+
+  /* Letter spacing */
+  --tracking-tight: -2px;
+  --tracking-normal: 0em;
+
+  /* Colors */
+  --color-neutral-0: hsl(0, 0%, 100%);
+  --color-neutral-200: hsl(250, 6%, 84%);
+  --color-neutral-300: hsl(240, 6%, 70%);
+  --color-neutral-600: hsl(243, 23%, 30%);
+  --color-neutral-700: hsl(243, 23%, 24%);
+  --color-neutral-800: hsl(243, 27%, 20%);
+  --color-neutral-900: hsl(243, 96%, 9%);
+  --color-orange-500: hsl(28, 100%, 52%);
+  --color-blue-500: hsl(233, 67%, 56%);
+  --color-blue-700: hsl(248, 70%, 36%);
+
+  /* Radius */
+  --rounded-0: 0;
+  --rounded-4: 0.25rem /* 4px */;
+  --rounded-6: 0.375rem /* 6px */;
+  --rounded-8: 0.5rem /* 8px */;
+  --rounded-10: 0.625rem /* 10px */;
+  --rounded-12: 0.75rem /* 12px */;
+  --rounded-16: 1rem /* 16px */;
+  --rounded-20: 1.25rem /* 20px */;
+  --rounded-24: 1.5rem /* 24px */;
+  --rounded-full: 9999px;
+}
+
+@layer base {
+  body {
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-size: var(--text-md);
+    font-weight: var(--font-medium);
+    line-height: var(--leading-2);
+    letter-spacing: var(--tracking-normal);
+    color: var(--color-neutral-0);
+    background-color: var(--color-neutral-900);
+  }
+}
+
+/* Utility classes for grid layouts */
+@utility wrapper {
+  width: 100%;
+  max-width: 75rem; /* 1200px */
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+}
+
+@utility span-full {
+  grid-column: 1 / -1;
+}
+
+/* Utility classes for flexbox layouts */
+@utility flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@utility flex-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Utility classes for typography*/
+@utility text-preset-1 {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  font-style: italic;
+  line-height: var(--leading-1);
+  letter-spacing: var(--tracking-tight);
+}
+
+@utility text-preset-2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-2);
+}
+
+@utility text-preset-3 {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-light);
+  line-height: var(--leading-1);
+}
+
+@utility text-preset-4 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+}
+
+@utility text-preset-5 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+}
+
+@utility text-preset-6 {
+  font-size: var(--text-md);
+}
+
+@utility text-preset-7 {
+  font-size: var(--text-base);
+  font-weight: var(--font-regular);
+}
+
+@utility text-preset-8 {
+  font-size: var(--text-sm);
+}
