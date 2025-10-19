@@ -1,5 +1,3 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
@@ -7,9 +5,9 @@ import SearchIcon from "@/assets/images/icon-search.svg?react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { fetchCitySuggestions } from "@/lib/api";
-import { cn, getFlagEmoji } from "@/lib/utils";
 import type { GeocodingResult } from "@/types/geocoding";
-import { Spinner } from "../ui/spinner";
+import LoadingState from "./LoadingState";
+import SuggestionList from "./SuggestionList";
 
 const DEBOUNCE_MS = 300;
 const BLUR_TIMEOUT_MS = 200;
@@ -110,45 +108,13 @@ export default function Autocomplete({
       {isFocused &&
         (isFetching || suggestions.length > 0) &&
         (isFetching ? (
-          <div className="absolute z-10 mt-2.5 h-[55px] w-full rounded-xl border border-secondary bg-popover p-2 text-popover-foreground">
-            <div
-              aria-live="polite"
-              className="flex items-center gap-y-2.5 px-2 py-2.5"
-            >
-              <Spinner />
-              <span className="ml-2 font-medium text-base">
-                Search in progress
-              </span>
-            </div>
-          </div>
+          <LoadingState />
         ) : (
-          <ul
-            className="absolute z-10 mt-3.5 grid w-full gap-y-1 rounded-xl border border-secondary bg-popover p-2 text-popover-foreground"
-            id="suggestions-list"
-          >
-            {suggestions.map((city, index) => (
-              <li key={city.id}>
-                <Button
-                  aria-selected={index === selectedIndex}
-                  className={cn(
-                    "w-full justify-start border border-transparent px-2.5 py-2.5 font-medium text-base hover:border-border hover:bg-secondary",
-                    index === selectedIndex ? "border-border bg-secondary" : ""
-                  )}
-                  onClick={() => handleSuggestionClick(city)}
-                  role="option"
-                >
-                  <span className="text-lg">
-                    {getFlagEmoji(city.country_code)}
-                  </span>
-                  <span className="truncate">
-                    {city.name}
-                    {city.admin1 && <span>{` — ${city.admin1}`}</span>}
-                    {`${", "}${city.country}`}
-                  </span>
-                </Button>
-              </li>
-            ))}
-          </ul>
+          <SuggestionList
+            onSelect={(city) => handleSuggestionClick(city)}
+            selectedIndex={selectedIndex}
+            suggestions={suggestions}
+          />
         ))}
     </div>
   );
