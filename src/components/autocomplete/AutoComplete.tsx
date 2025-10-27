@@ -1,10 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import SearchIcon from "@/assets/images/icon-search.svg?react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { fetchCitySuggestions } from "@/lib/api";
+import { useCitySuggestions } from "@/hooks/useCitySuggestions";
+import { useSelectedCity } from "@/hooks/useSelectedCity";
 import type { GeocodingResult } from "@/types/geocoding";
 import LoadingState from "./LoadingState";
 import SuggestionList from "./SuggestionList";
@@ -21,18 +21,17 @@ type AutoCompleteProps = {
 export default function Autocomplete({
   value = "",
   onChange,
-  onSelectCity,
 }: AutoCompleteProps) {
   const [query, setQuery] = useState(value);
   const [debouncedQuery] = useDebounce(query, DEBOUNCE_MS);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isFocused, setIsFocused] = useState(false);
+  const { setSelectedCity } = useSelectedCity();
 
-  const { data: suggestions = [], isFetching } = useQuery({
-    queryKey: ["city-suggestions", debouncedQuery],
-    queryFn: () => fetchCitySuggestions(debouncedQuery),
-    enabled: !!debouncedQuery && isFocused,
-  });
+  const { data: suggestions = [], isFetching } = useCitySuggestions(
+    debouncedQuery,
+    isFocused
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -55,7 +54,6 @@ export default function Autocomplete({
       if (selected) {
         setQuery(selected.name);
         onChange?.(selected.name);
-        onSelectCity?.(selected);
       }
     } else if (e.key === "Escape") {
       setSelectedIndex(-1);
@@ -63,9 +61,13 @@ export default function Autocomplete({
   };
 
   const handleSuggestionClick = (city: GeocodingResult) => {
-    setQuery(city.name);
+    setQuery(`${city.name} - ${city.country}`);
     onChange?.(city.name);
-    onSelectCity?.(city);
+    setSelectedCity({
+      lat: city.latitude,
+      lon: city.longitude,
+      name: `${city.name}, ${city.country}`,
+    });
     setSelectedIndex(-1);
   };
 

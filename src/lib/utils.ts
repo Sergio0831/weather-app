@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { format, parseISO } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
 // Utility to merge class names
@@ -19,4 +20,21 @@ export function getFlagEmoji(countryCode?: string) {
     .replace(/./g, (char) =>
       String.fromCodePoint(FLAG_EMOJI_OFFSET + char.charCodeAt(0))
     );
+}
+
+// Format date to a readable string
+export function formatDate(date: string) {
+  try {
+    return format(parseISO(date), "EEEE, MMM d, yyyy");
+  } catch {
+    return "";
+  }
+}
+
+export function formatToDay(dateString: string): string {
+  if (!dateString) {
+    return "";
+  }
+  const date = parseISO(dateString);
+  return format(date, "EEE"); // "EEE" → short day name (Sun, Mon, Tue)
 }

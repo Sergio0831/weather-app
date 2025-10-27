@@ -113,7 +113,7 @@
   max-width: 79rem; /* 1264px */
   margin-inline: auto;
   display: grid;
-  gap: 2rem;
+  column-gap: 2rem;
   grid-template-columns: repeat(4, 1fr);
 
   @media (width >= 40rem) {
