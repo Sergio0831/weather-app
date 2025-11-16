@@ -1,6 +1,6 @@
-import useLocalStorageState from "use-local-storage-state";
 import DropdownIcon from "@/assets/images/icon-dropdown.svg?react";
 import UnitsIcon from "@/assets/images/icon-units.svg?react";
+import { useUnits } from "@/hooks/useUnits";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -12,12 +12,7 @@ import {
 import UnitOptionGroup from "./UnitOptionGroup";
 
 export default function UnitSwitcher() {
-  const [units, setUnits] = useLocalStorageState<"metric" | "imperial">(
-    "units",
-    {
-      defaultValue: "metric",
-    }
-  );
+  const { units, setUnits } = useUnits();
 
   const isMetric = units === "metric";
 

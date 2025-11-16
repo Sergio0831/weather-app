@@ -112,17 +112,6 @@
   width: 100%;
   max-width: 79rem; /* 1264px */
   margin-inline: auto;
-  display: grid;
-  column-gap: 2rem;
-  grid-template-columns: repeat(4, 1fr);
-
-  @media (width >= 40rem) {
-    grid-template-columns: repeat(8, 1fr);
-  }
-
-  @media (width >= 48rem) {
-    grid-template-columns: repeat(12, 1fr);
-  }
 }
 
 @utility span-full {
@@ -142,6 +131,7 @@
   align-items: center;
 }
 
+/* Utility classes for grid layouts with auto-fit columns */
 @utility grid-cols {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(8.75rem, 1fr));
@@ -150,6 +140,26 @@
 @utility grid-cols-sm {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+}
+
+/* Utility for custom scrollbar */
+@utility custom-scrollbar {
+  scrollbar-width: 4px;
+  scrollbar-color: var(--color-border) var(--color-popover);
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color-popover);
+    border-radius: 0.75rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-accent);
+    border-radius: 0.75rem;
+  }
 }
 
 /* Utility classes for typography*/

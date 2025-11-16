@@ -15,7 +15,7 @@ export const fetchCitySuggestions = async (
     params: { name, count: 5 },
   });
 
-  return res.data.results || [];
+  return res.data.results ?? [];
 };
 
 // Fetch weather data
@@ -24,8 +24,10 @@ const WEATHER_API_URL = "https://api.open-meteo.com/v1/forecast";
 export const fetchWeatherData = async (
   lat: number,
   lon: number,
-  units: "celsius" | "fahrenheit" = "celsius"
+  units: "metric" | "imperial" = "metric"
 ): Promise<WeatherResponse> => {
+  const isImperial = units === "imperial";
+
   const params = {
     latitude: lat,
     longitude: lon,
@@ -34,7 +36,11 @@ export const fetchWeatherData = async (
     hourly: "weather_code,temperature_2m",
     daily: "weather_code,temperature_2m_max,temperature_2m_min",
     timezone: "auto",
-    temperature_unit: units,
+    ...(isImperial && {
+      temperature_unit: "fahrenheit",
+      wind_speed_unit: "mph",
+      precipitation_unit: "inch",
+    }),
   };
 
   const { data } = await axios.get<WeatherResponse>(WEATHER_API_URL, {
