@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+// import { useGeolocation } from "@uidotdev/usehooks";
 import { format, parseISO } from "date-fns";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,6 +12,7 @@ import HourlyForecastCard from "./components/custom/HourlyForecastCard";
 import WeatherForecastCard from "./components/custom/WeatherForecastCard";
 import WeatherStatCard from "./components/custom/WeatherStatCard";
 import Header from "./components/layout/Header";
+import LoadingSkeleton from "./components/layout/LoadingSkeleton";
 import { Form, FormField, FormItem, FormMessage } from "./components/ui/form";
 import { useSelectedCity } from "./hooks/useSelectedCity";
 import { useWeatherQuery } from "./hooks/useWeatherQuery";
@@ -38,6 +40,7 @@ export default function App() {
   const [selectedDay, setSelectedDay] = useState<string>("");
   const [hasSearched, setHasSearched] = useState(false);
   const { selectedCity, setSelectedCity } = useSelectedCity();
+  // const { loading, error, latitude, longitude } = useGeolocation();
   const {
     data: weatherData,
     isFetching,
@@ -72,6 +75,16 @@ export default function App() {
     });
     setHasSearched(false);
   };
+
+  // useEffect(() => {
+  //   if (!(loading || error) && latitude && longitude && !selectedCity) {
+  //     setSelectedCity({
+  //       name: "Your Location",
+  //       lat: latitude,
+  //       lon: longitude,
+  //     });
+  //   }
+  // }, [loading, error, latitude, longitude, selectedCity, setSelectedCity]);
 
   useEffect(() => {
     if (weatherData) {
@@ -130,7 +143,7 @@ export default function App() {
               No search result found!
             </h2>
           )}
-          {isFetching && <div>Loading...</div>}
+          {isFetching && <LoadingSkeleton />}
           {weatherData && (
             <div className="grid grid-cols-4 gap-8 sm:grid-cols-8 md:grid-cols-12">
               {/* Left block */}

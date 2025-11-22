@@ -206,3 +206,46 @@
 @utility text-preset-8 {
   font-size: var(--text-sm);
 }
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  height: 30px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(farthest-side, #fff 90%, #0000);
+  background: var(--_g), var(--_g), var(--_g);
+  background-size: 14px 14px; /* diameter based on 12px radius */
+  animation: l44 1s infinite linear alternate;
+}
+
+@keyframes l44 {
+  0%,
+  5% {
+    background-position: calc(0 * 100% / 2) 50%, calc(1 * 100% / 2) 50%,
+      calc(2 * 100% / 2) 50%;
+  }
+  16.66% {
+    background-position: calc(0 * 100% / 2) 0, calc(1 * 100% / 2) 50%,
+      calc(2 * 100% / 2) 50%;
+  }
+  33.33% {
+    background-position: calc(0 * 100% / 2) 0, calc(1 * 100% / 2) 0,
+      calc(2 * 100% / 2) 50%;
+  }
+  50% {
+    background-position: calc(0 * 100% / 2) 100%, calc(1 * 100% / 2) 0,
+      calc(2 * 100% / 2) 0;
+  }
+  66.66% {
+    background-position: calc(0 * 100% / 2) 100%, calc(1 * 100% / 2) 100%,
+      calc(2 * 100% / 2) 0;
+  }
+  83.33% {
+    background-position: calc(0 * 100% / 2) 50%, calc(1 * 100% / 2) 100%,
+      calc(2 * 100% / 2) 100%;
+  }
+  95%,
+  100% {
+    background-position: calc(0 * 100% / 2) 50%, calc(1 * 100% / 2) 50%,
+      calc(2 * 100% / 2) 50%;
+  }
+}
